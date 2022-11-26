@@ -2,7 +2,7 @@
 
 This project was made by Wu Bocheng to briefly display some of his homework of the core courses.
 
-Examples:
+Examples: https://zhuanlan.zhihu.com/p/484275023
 
 ##1. 投硬币
 
