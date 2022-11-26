@@ -1,5 +1,6 @@
-# Machine-learning-Courses
-This project was made by Wu Bocheng to briefly display some of his homework of the core courses. 
+# Course Homework
+
+This project was made by Wu Bocheng to briefly display some of his homework of the core courses.
 
 Examples:
 
@@ -9,31 +10,37 @@ Examples:
 
 &emsp;&emsp;考虑掷硬币试验。分别使用参数为(a,b)=(1,1)和(a,b)=(10,5)的贝塔分布作为先验，用程序分别画出出现下列正面向上的计数结果时，硬币向上的概率参数的后验分布：
 
-1. 投掷0次，0次正面向上
-2. 投掷1次，1次正面向上
-3. 投掷2次，2次正面向上
-4. 投掷3次，2次正面向上
-5. 投掷8次，4次正面向上
-6. 投掷15次，6次正面向上
-7. 投掷50次，24次正面向上
-8. 投掷500次，263次正面向上
+1. 投掷 0 次，0 次正面向上
+2. 投掷 1 次，1 次正面向上
+3. 投掷 2 次，2 次正面向上
+4. 投掷 3 次，2 次正面向上
+5. 投掷 8 次，4 次正面向上
+6. 投掷 15 次，6 次正面向上
+7. 投掷 50 次，24 次正面向上
+8. 投掷 500 次，263 次正面向上
 
 ## 1.2 解答
 
-抛硬币场景，$\theta$为硬币正面向上的概率，x是n次实验观测到正面向上的次数
+抛硬币场景，$\theta$为硬币正面向上的概率，x 是 n 次实验观测到正面向上的次数
+
 $$
 P(\theta \mid  x) = \frac{P(x \mid   \theta) P(\theta)}{P(x)} = \frac{P(x \mid   \theta) P(\theta)}{\int P(x \mid   \theta) P(\theta) d\theta}
 $$
+
 由于原问题为多次抛硬币，分布为二项分布
+
 $$
 P(x \mid   \theta) = C_{n}^x \theta^x (1-\theta)^{n-x}
 $$
 
-由于题目假设参数$\theta$的先验分布为Beta分布:
+由于题目假设参数$\theta$的先验分布为 Beta 分布:
+
 $$
 P(\theta) = \frac{1}{B(a,b)}\theta^{a-1}(1-\theta)^{b-1}
 $$
+
 所以:
+
 $$
 \begin{aligned}
 P(x) &= \int P(x \mid \theta) P(\theta) d\theta\\
@@ -44,7 +51,9 @@ P(x) &= \int P(x \mid \theta) P(\theta) d\theta\\
 &= C_{n}^x \frac{B(a+x,b+n-x)}{B(a,b)}
 \end{aligned}
 $$
+
 所以后验分布:
+
 $$
 \begin{aligned}
 P(\theta \mid  x) &= \frac{C_{n}^x \theta^x (1-\theta)^{n-x} \frac{1}{B(a,b)}\theta^{a-1}(1-\theta)^{b-1}}{C_{n}^x \frac{B(a+x,b+n-x)}{B(a,b)}}\\
@@ -52,8 +61,6 @@ P(\theta \mid  x) &= \frac{C_{n}^x \theta^x (1-\theta)^{n-x} \frac{1}{B(a,b)}\th
 &= Beta(\theta \mid a+x,b+n-x)
 \end{aligned}
 $$
-
-
 
 ```python
 import numpy as np
@@ -91,23 +98,22 @@ for n,x in zip(n_list,x_list):
 plt.savefig("抛硬币.png",dpi=300)
 ```
 
-
-​    
 ![png](D:\Workspace\github\main_files\main_2_0.png)
-​    
-
 
 ## 2.分布证明
 
 ### 2.1 多项分布的共轭先验是狄利克雷分布
 
-似然函数是多项分布,其中$\theta_i$表示第i类出现的概率，$n_i$表示第i类出现的数量。通过伽马函数$\Gamma(x)=\int_{0}^{\infty} t^{x-1} e^{-t} dt$对阶乘进行近似,有$\Gamma(x+1) = x！$:
+似然函数是多项分布,其中$\theta_i$表示第 i 类出现的概率，$n_i$表示第 i 类出现的数量。通过伽马函数$\Gamma(x)=\int_{0}^{\infty} t^{x-1} e^{-t} dt$对阶乘进行近似,有$\Gamma(x+1) = x！$:
+
 $$
 P(x \mid \theta) = \frac{n!}{n_1!n_2!...n_k!}\prod_{i=1}^k \theta_i^{n_i} = \frac{\Gamma(n+1)}{\prod_{i=1}^k \Gamma(n_i+1)}\prod_{i=1}^k \theta_i^{n_i}
 $$
+
 其中，$\sum_{i=1}^k \theta_i = 1$.
 
 假设概率$\theta = (\theta_1,\theta_2,...,\theta_k)$的先验分布为参数是$\alpha=(\alpha_1,\alpha_2,...,\alpha_k)$的狄利克雷分布$Dir(\alpha)$:
+
 $$
 P(\theta)=\frac{\Gamma(\sum_{i=1}^k \alpha_i)}{\prod_{i=1}^{k} \Gamma(\alpha_{i})} \prod_{i=1}^{k} \theta_{i}^{\alpha_{i}-1}
 $$
@@ -126,6 +132,7 @@ P(x) &= \int P(x \mid \theta) P(\theta) d\theta\\
 $$
 
 所以$\theta$的后验分布:
+
 $$
 \begin{aligned}
 P(\theta \mid x) &= \frac{P(x \mid \theta)P(\theta)}{P(x)}\\
@@ -134,6 +141,7 @@ P(\theta \mid x) &= \frac{P(x \mid \theta)P(\theta)}{P(x)}\\
 &=Dir(n+\alpha)
 \end{aligned}
 $$
+
 $\theta$的先验和后验分布都是狄利克雷分布，似然函数是多项分布，所以多项分布的共轭先验是狄利克雷分布
 
 ### 2.2 泊松分布的共轭先验是伽马分布
@@ -144,7 +152,7 @@ $$
 P(x = n \mid \lambda) = \frac{\lambda^n}{n!}e^{-\lambda} = \frac{\lambda^n}{\Gamma(n+1)}e^{-\lambda}
 $$
 
-假设$\lambda$服从参数为(a,b)的伽马分布Ga(a,b):
+假设$\lambda$服从参数为(a,b)的伽马分布 Ga(a,b):
 
 $$
 P(\lambda) = \frac{\lambda^{a-1}e^{-b \lambda}b^a}{\Gamma(a)}
@@ -177,8 +185,6 @@ $$
 
 $\lambda$的先验和后验分布都是伽马分布，似然函数是泊松分布，所以泊松分布的共轭先验是伽马分布.
 
-
-
 ### 2.3 指数分布的共轭先验是伽马分布
 
 似然函数是指数分布,n 表示事件发生的次数，$\lambda$表示单位时间内随机事件的平均发生次数:
@@ -187,7 +193,7 @@ $$
 P(x = n \mid \lambda) = \lambda e^{-\lambda x}
 $$
 
-假设$\lambda$服从参数为(a,b)的伽马分布Ga(a,b):
+假设$\lambda$服从参数为(a,b)的伽马分布 Ga(a,b):
 
 $$
 P(\lambda) = \frac{\lambda^{a-1}e^{-b \lambda}b^a}{\Gamma(a)}
@@ -219,8 +225,6 @@ P(\lambda \mid x) &= \frac{P(x \mid \lambda)P(\lambda)}{P(x)}\\
 $$
 
 $\lambda$的先验和后验分布都是伽马分布，似然函数是指数分布，所以指数分布的共轭先验是伽马分布.
-
-
 
 ### 2.4 方差已知的正态分布的共轭先验是正态分布
 
@@ -318,9 +322,14 @@ P(\sigma^2\mid x) &= \frac{P(x\mid \sigma^2)P(\sigma^2)}{P(x)}\\
 $$
 
 $\lambda$的先验和后验分布都是逆伽马函数，似然函数是正态分布分布，所以均值已知的正态分布的共轭先验是逆伽马分布。
-#   H o m e w o r k s  
- #   H o m e w o r k s  
- #   H o m e w o r k s  
- #   H o m e w o r k s  
- #   H o m e w o r k s  
- 
+#� �H�o�m�e�w�o�r�k�s�
+�
+�#� �H�o�m�e�w�o�r�k�s�
+�
+�#� �H�o�m�e�w�o�r�k�s�
+�
+�#� �H�o�m�e�w�o�r�k�s�
+�
+�#� �H�o�m�e�w�o�r�k�s�
+�
+�
