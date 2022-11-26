@@ -1,0 +1,31 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "273803761.xyz",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "course_data",
+            "database": "utf-8",
+            "username": "course_data",
+            "password": "ZJwbc902410",
+            "connectionTimeout": 1000
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "202.117.45.203",
+            "port": 5018,
+            "driver": "MySQL",
+            "name": "RenCompetition",
+            "database": "RenCompetition",
+            "username": "sntm",
+            "password": "XJTUbid$2022"
+        }
+    ]
+}
